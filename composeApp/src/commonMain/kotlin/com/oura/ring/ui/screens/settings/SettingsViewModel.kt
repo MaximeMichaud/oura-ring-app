@@ -59,7 +59,7 @@ class SettingsViewModel(
             val result = syncManager.syncAll()
             val status = when (result) {
                 is SyncResult.Success -> "Synced ${result.counts.values.sum()} records"
-                is SyncResult.TokenExpired -> "Token expired — update in settings"
+                is SyncResult.TokenExpired -> "Token expired  - update in settings"
                 is SyncResult.AlreadyRunning -> "Sync already running"
                 is SyncResult.Error -> "Error: ${result.message}"
             }

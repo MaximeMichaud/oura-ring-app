@@ -73,11 +73,11 @@ fun ActivityScreen(viewModel: ActivityViewModel = koinViewModel()) {
                     unit = "kcal",
                 )
                 Column {
-                    StatCard("Steps", state.steps?.toString() ?: "—", color = OuraColors.Orange)
-                    StatCard("Total Cal", state.totalCal?.toString() ?: "—", color = OuraColors.Red, unit = " kcal")
+                    StatCard("Steps", state.steps?.toString() ?: "-", color = OuraColors.Orange)
+                    StatCard("Total Cal", state.totalCal?.toString() ?: "-", color = OuraColors.Red, unit = " kcal")
                     StatCard(
                         "Distance",
-                        state.distanceKm?.let { String.format("%.1f", it) } ?: "—",
+                        state.distanceKm?.let { String.format("%.1f", it) } ?: "-",
                         color = OuraColors.Orange,
                         unit = " km",
                     )
@@ -103,7 +103,7 @@ fun ActivityScreen(viewModel: ActivityViewModel = koinViewModel()) {
                     ) {
                         Text(w.day, color = OuraColors.OnSurfaceDim, style = MaterialTheme.typography.bodySmall)
                         Text(
-                            w.activity?.replaceFirstChar { it.titlecase() } ?: "—",
+                            w.activity?.replaceFirstChar { it.titlecase() } ?: "-",
                             color = OuraColors.OnSurface,
                             style = MaterialTheme.typography.bodySmall,
                         )

@@ -56,7 +56,7 @@ fun StatCardWithThreshold(
     unit: String = "",
     modifier: Modifier = Modifier,
 ) {
-    val display = value?.let { String.format(format, it) } ?: "—"
+    val display = value?.let { String.format(format, it) } ?: "-"
     val color = value?.let { getThresholdColor(it, thresholds) } ?: OuraColors.OnSurfaceDim
     StatCard(label = label, value = display, color = color, unit = unit, modifier = modifier)
 }
@@ -68,7 +68,7 @@ fun StatCardMapped(
     colorMap: Map<String, Color>,
     modifier: Modifier = Modifier,
 ) {
-    val display = value?.replaceFirstChar { it.titlecase() } ?: "—"
+    val display = value?.replaceFirstChar { it.titlecase() } ?: "-"
     val color = value?.let { colorMap[it] } ?: OuraColors.OnSurfaceDim
     StatCard(label = label, value = display, color = color, modifier = modifier)
 }

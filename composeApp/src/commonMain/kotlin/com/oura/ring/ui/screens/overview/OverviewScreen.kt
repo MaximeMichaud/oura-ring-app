@@ -92,14 +92,14 @@ fun OverviewScreen(
                 )
                 StatCard(
                     label = "Active Cal",
-                    value = state.scores.activeCal?.toString() ?: "—",
+                    value = state.scores.activeCal?.toString() ?: "-",
                     color = OuraColors.Orange,
                     unit = " kcal",
                     modifier = Modifier.weight(1f),
                 )
                 StatCard(
                     label = "Steps",
-                    value = state.scores.steps?.toString() ?: "—",
+                    value = state.scores.steps?.toString() ?: "-",
                     color = OuraColors.Orange,
                     modifier = Modifier.weight(1f),
                 )

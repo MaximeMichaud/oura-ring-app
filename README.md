@@ -1,16 +1,16 @@
 # Oura Ring App
 
-Kotlin Multiplatform companion app for [Oura Ring](https://ouraring.com) data — sleep, readiness, activity, stress, and body metrics.
+Kotlin Multiplatform companion app for [Oura Ring](https://ouraring.com) data  - sleep, readiness, activity, stress, and body metrics.
 
 Native offline-first alternative to the [oura-dashboard](https://github.com/MaximeMichaud/oura-dashboard) web project, built with Compose Multiplatform for Android, Desktop, and iOS.
 
 ## Stack
 
 - **Kotlin 2.3.0** + **Compose Multiplatform 1.10.1**
-- **Ktor 3.4.0** — HTTP client with retry logic
-- **SQLDelight 2.2.1** — Typed local database (12 tables)
-- **Koin 4.1.1** — Dependency injection
-- **Vico 2.1.4** — Multiplatform charts
+- **Ktor 3.4.0**  - HTTP client with retry logic
+- **SQLDelight 2.2.1**  - Typed local database (12 tables)
+- **Koin 4.1.1**  - Dependency injection
+- **Vico 2.1.4**  - Multiplatform charts
 
 ## Platforms
 

@@ -71,7 +71,7 @@ fun ReadinessScreen(viewModel: ReadinessViewModel = koinViewModel()) {
                 )
                 StatCard(
                     label = "Temp Deviation",
-                    value = state.tempDeviation?.let { String.format("%.2f", it) } ?: "—",
+                    value = state.tempDeviation?.let { String.format("%.2f", it) } ?: "-",
                     color = OuraColors.Orange,
                     unit = " °C",
                 )

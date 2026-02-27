@@ -105,7 +105,7 @@ fun SleepScreen(viewModel: SleepViewModel = koinViewModel()) {
             ) {
                 StatCard(
                     label = "Total Sleep",
-                    value = s?.total_sleep?.let { String.format("%.1f", it / 3600.0) } ?: "—",
+                    value = s?.total_sleep?.let { String.format("%.1f", it / 3600.0) } ?: "-",
                     color = OuraColors.Blue,
                     unit = " h",
                     modifier = Modifier.weight(1f),
@@ -119,28 +119,28 @@ fun SleepScreen(viewModel: SleepViewModel = koinViewModel()) {
                 )
                 StatCard(
                     label = "Avg HRV",
-                    value = s?.average_hrv?.let { String.format("%.0f", it) } ?: "—",
+                    value = s?.average_hrv?.let { String.format("%.0f", it) } ?: "-",
                     color = OuraColors.Purple,
                     unit = " ms",
                     modifier = Modifier.weight(1f),
                 )
                 StatCard(
                     label = "Lowest HR",
-                    value = s?.lowest_heart_rate?.toString() ?: "—",
+                    value = s?.lowest_heart_rate?.toString() ?: "-",
                     color = OuraColors.Red,
                     unit = " bpm",
                     modifier = Modifier.weight(1f),
                 )
                 StatCard(
                     label = "Latency",
-                    value = s?.latency?.let { String.format("%.0f", it / 60.0) } ?: "—",
+                    value = s?.latency?.let { String.format("%.0f", it / 60.0) } ?: "-",
                     color = OuraColors.LightBlue,
                     unit = " min",
                     modifier = Modifier.weight(1f),
                 )
                 StatCard(
                     label = "Avg Breathing",
-                    value = s?.average_breath?.let { String.format("%.1f", it) } ?: "—",
+                    value = s?.average_breath?.let { String.format("%.1f", it) } ?: "-",
                     color = OuraColors.Cyan,
                     unit = " br/min",
                     modifier = Modifier.weight(1f),

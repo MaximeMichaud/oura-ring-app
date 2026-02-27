@@ -68,7 +68,7 @@ fun GaugeChart(
 
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Text(
-                text = value?.let { String.format("%.0f", it) } ?: "—",
+                text = value?.let { String.format("%.0f", it) } ?: "-",
                 fontSize = 28.sp,
                 fontWeight = FontWeight.Bold,
                 color = value?.let { getThresholdColor(it, thresholds) } ?: OuraColors.OnSurfaceDim,
