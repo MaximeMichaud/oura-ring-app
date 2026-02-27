@@ -1,0 +1,22 @@
+CREATE TABLE daily_resilience (
+    day                          TEXT NOT NULL PRIMARY KEY,
+    level                        TEXT,
+    contributors_sleep_recovery  REAL,
+    contributors_daytime_recovery REAL,
+    contributors_stress          REAL
+);
+
+upsert:
+INSERT OR REPLACE INTO daily_resilience(
+    day, level, contributors_sleep_recovery,
+    contributors_daytime_recovery, contributors_stress
+) VALUES (?, ?, ?, ?, ?);
+
+selectByDay:
+SELECT * FROM daily_resilience WHERE day = ?;
+
+selectInRange:
+SELECT * FROM daily_resilience WHERE day >= ? AND day <= ? ORDER BY day ASC;
+
+selectLatest:
+SELECT * FROM daily_resilience WHERE day <= ? ORDER BY day DESC LIMIT 1;

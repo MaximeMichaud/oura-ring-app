@@ -1,0 +1,67 @@
+CREATE TABLE sleep (
+    id                    TEXT NOT NULL PRIMARY KEY,
+    day                   TEXT NOT NULL,
+    bedtime_start         TEXT,
+    bedtime_end           TEXT,
+    duration              INTEGER,
+    total_sleep           INTEGER,
+    awake_time            INTEGER,
+    light_sleep           INTEGER,
+    deep_sleep            INTEGER,
+    rem_sleep             INTEGER,
+    restless_periods      INTEGER,
+    efficiency            INTEGER,
+    latency               INTEGER,
+    type                  TEXT,
+    readiness_score_delta INTEGER,
+    average_breath        REAL,
+    average_heart_rate    REAL,
+    average_hrv           REAL,
+    lowest_heart_rate     INTEGER,
+    heart_rate            TEXT,
+    hrv                   TEXT,
+    sleep_phase_5_min     TEXT,
+    movement_30_sec       TEXT,
+    sleep_score_delta     REAL,
+    period                INTEGER,
+    low_battery_alert     INTEGER DEFAULT 0
+);
+
+CREATE INDEX idx_sleep_day ON sleep(day);
+CREATE INDEX idx_sleep_day_type ON sleep(day, type);
+
+upsert:
+INSERT OR REPLACE INTO sleep(
+    id, day, bedtime_start, bedtime_end, duration, total_sleep,
+    awake_time, light_sleep, deep_sleep, rem_sleep, restless_periods,
+    efficiency, latency, type, readiness_score_delta, average_breath,
+    average_heart_rate, average_hrv, lowest_heart_rate, heart_rate,
+    hrv, sleep_phase_5_min, movement_30_sec, sleep_score_delta,
+    period, low_battery_alert
+) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+
+selectPrimaryByDay:
+SELECT * FROM sleep
+WHERE type = 'long_sleep' AND day = ?
+ORDER BY total_sleep DESC
+LIMIT 1;
+
+selectPrimaryInRange:
+SELECT * FROM sleep
+WHERE type = 'long_sleep' AND day >= ? AND day <= ?
+ORDER BY day ASC, total_sleep DESC;
+
+availableNights:
+SELECT DISTINCT day FROM sleep
+WHERE type = 'long_sleep' AND day >= ? AND day <= ?
+ORDER BY day DESC;
+
+napFrequency:
+SELECT day, COUNT(*) AS naps FROM sleep
+WHERE type IN ('late_nap', 'sleep') AND day >= ? AND day <= ?
+GROUP BY day ORDER BY day;
+
+selectByDayRange:
+SELECT * FROM sleep
+WHERE day >= ? AND day <= ?
+ORDER BY day ASC;

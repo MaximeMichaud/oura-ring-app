@@ -1,0 +1,26 @@
+CREATE TABLE workout (
+    id             TEXT NOT NULL PRIMARY KEY,
+    day            TEXT NOT NULL,
+    activity       TEXT,
+    calories       REAL,
+    distance       REAL,
+    start_datetime TEXT,
+    end_datetime   TEXT,
+    intensity      TEXT,
+    label          TEXT,
+    source         TEXT
+);
+
+CREATE INDEX idx_workout_day ON workout(day);
+
+upsert:
+INSERT OR REPLACE INTO workout(
+    id, day, activity, calories, distance,
+    start_datetime, end_datetime, intensity, label, source
+) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+
+selectInRange:
+SELECT * FROM workout WHERE day >= ? AND day <= ? ORDER BY day DESC;
+
+selectByDay:
+SELECT * FROM workout WHERE day = ?;

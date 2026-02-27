@@ -1,0 +1,23 @@
+CREATE TABLE sleep_time (
+    id                    TEXT NOT NULL PRIMARY KEY,
+    day                   TEXT NOT NULL,
+    optimal_bedtime_start INTEGER,
+    optimal_bedtime_end   INTEGER,
+    optimal_bedtime_tz    INTEGER,
+    recommendation        TEXT,
+    status                TEXT
+);
+
+CREATE INDEX idx_sleep_time_day ON sleep_time(day);
+
+upsert:
+INSERT OR REPLACE INTO sleep_time(
+    id, day, optimal_bedtime_start, optimal_bedtime_end,
+    optimal_bedtime_tz, recommendation, status
+) VALUES (?, ?, ?, ?, ?, ?, ?);
+
+selectLatest:
+SELECT * FROM sleep_time WHERE day <= ? ORDER BY day DESC LIMIT 1;
+
+selectInRange:
+SELECT * FROM sleep_time WHERE day >= ? AND day <= ? ORDER BY day DESC;

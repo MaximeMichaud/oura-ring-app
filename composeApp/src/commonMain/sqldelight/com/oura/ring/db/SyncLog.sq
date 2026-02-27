@@ -1,0 +1,31 @@
+CREATE TABLE sync_log (
+    endpoint             TEXT NOT NULL PRIMARY KEY,
+    last_sync_date       TEXT,
+    record_count         INTEGER DEFAULT 0,
+    updated_at           TEXT,
+    last_error           TEXT,
+    consecutive_failures INTEGER DEFAULT 0,
+    last_success_at      TEXT
+);
+
+upsertSuccess:
+INSERT OR REPLACE INTO sync_log(
+    endpoint, last_sync_date, record_count, updated_at,
+    last_error, consecutive_failures, last_success_at
+) VALUES (?, ?, ?, ?, NULL, 0, ?);
+
+recordFailure:
+UPDATE sync_log SET
+    last_error = ?,
+    consecutive_failures = COALESCE(consecutive_failures, 0) + 1,
+    updated_at = ?
+WHERE endpoint = ?;
+
+insertIfMissing:
+INSERT OR IGNORE INTO sync_log(endpoint, consecutive_failures) VALUES (?, 0);
+
+getLastSyncDate:
+SELECT last_sync_date FROM sync_log WHERE endpoint = ?;
+
+getAll:
+SELECT * FROM sync_log ORDER BY endpoint;

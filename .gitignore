@@ -1,0 +1,45 @@
+# Gradle
+.gradle/
+build/
+!gradle-wrapper.jar
+
+# IDE
+.idea/
+*.iml
+*.ipr
+*.iws
+.DS_Store
+
+# Local config
+local.properties
+
+# Android
+*.apk
+*.aab
+*.ap_
+*.dex
+
+# Kotlin
+*.class
+
+# Distribution
+*.dmg
+*.msi
+*.deb
+*.rpm
+
+# OS
+Thumbs.db
+.DS_Store
+*~
+
+# Claude
+CLAUDE.md
+
+# Kotlin metadata
+.kotlin/
+
+# Secrets
+*.keystore
+*.jks
+.env

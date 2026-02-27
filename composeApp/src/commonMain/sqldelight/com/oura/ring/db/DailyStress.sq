@@ -1,0 +1,19 @@
+CREATE TABLE daily_stress (
+    day           TEXT NOT NULL PRIMARY KEY,
+    stress_high   INTEGER,
+    recovery_high INTEGER,
+    day_summary   TEXT
+);
+
+upsert:
+INSERT OR REPLACE INTO daily_stress(day, stress_high, recovery_high, day_summary)
+VALUES (?, ?, ?, ?);
+
+selectByDay:
+SELECT * FROM daily_stress WHERE day = ?;
+
+selectInRange:
+SELECT * FROM daily_stress WHERE day >= ? AND day <= ? ORDER BY day ASC;
+
+selectLatest:
+SELECT * FROM daily_stress WHERE day <= ? ORDER BY day DESC LIMIT 1;

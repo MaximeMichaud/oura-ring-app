@@ -1,0 +1,27 @@
+CREATE TABLE daily_sleep (
+    day                       TEXT NOT NULL PRIMARY KEY,
+    score                     INTEGER,
+    contributors_deep_sleep   INTEGER,
+    contributors_efficiency   INTEGER,
+    contributors_latency      INTEGER,
+    contributors_rem_sleep    INTEGER,
+    contributors_restfulness  INTEGER,
+    contributors_timing       INTEGER,
+    contributors_total_sleep  INTEGER
+);
+
+upsert:
+INSERT OR REPLACE INTO daily_sleep(
+    day, score, contributors_deep_sleep, contributors_efficiency,
+    contributors_latency, contributors_rem_sleep, contributors_restfulness,
+    contributors_timing, contributors_total_sleep
+) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);
+
+selectByDay:
+SELECT * FROM daily_sleep WHERE day = ?;
+
+selectInRange:
+SELECT * FROM daily_sleep WHERE day >= ? AND day <= ? ORDER BY day ASC;
+
+selectLatest:
+SELECT * FROM daily_sleep WHERE day <= ? ORDER BY day DESC LIMIT 1;

@@ -1,0 +1,51 @@
+CREATE TABLE daily_activity (
+    day                                TEXT NOT NULL PRIMARY KEY,
+    score                              INTEGER,
+    active_calories                    INTEGER,
+    total_calories                     INTEGER,
+    steps                              INTEGER,
+    equivalent_walking_distance        INTEGER,
+    low_activity_time                  INTEGER,
+    medium_activity_time               INTEGER,
+    high_activity_time                 INTEGER,
+    resting_time                       INTEGER,
+    sedentary_time                     INTEGER,
+    non_wear_time                      INTEGER,
+    average_met_minutes                REAL,
+    high_activity_met_minutes          INTEGER,
+    medium_activity_met_minutes        INTEGER,
+    low_activity_met_minutes           INTEGER,
+    sedentary_met_minutes              INTEGER,
+    inactivity_alerts                  INTEGER,
+    target_calories                    INTEGER,
+    target_meters                      INTEGER,
+    meters_to_target                   INTEGER,
+    contributors_meet_daily_targets    INTEGER,
+    contributors_move_every_hour       INTEGER,
+    contributors_recovery_time         INTEGER,
+    contributors_stay_active           INTEGER,
+    contributors_training_frequency    INTEGER,
+    contributors_training_volume       INTEGER
+);
+
+upsert:
+INSERT OR REPLACE INTO daily_activity(
+    day, score, active_calories, total_calories, steps,
+    equivalent_walking_distance, low_activity_time, medium_activity_time,
+    high_activity_time, resting_time, sedentary_time, non_wear_time,
+    average_met_minutes, high_activity_met_minutes, medium_activity_met_minutes,
+    low_activity_met_minutes, sedentary_met_minutes, inactivity_alerts,
+    target_calories, target_meters, meters_to_target,
+    contributors_meet_daily_targets, contributors_move_every_hour,
+    contributors_recovery_time, contributors_stay_active,
+    contributors_training_frequency, contributors_training_volume
+) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+
+selectByDay:
+SELECT * FROM daily_activity WHERE day = ?;
+
+selectInRange:
+SELECT * FROM daily_activity WHERE day >= ? AND day <= ? ORDER BY day ASC;
+
+selectLatest:
+SELECT * FROM daily_activity WHERE day <= ? ORDER BY day DESC LIMIT 1;

@@ -1,0 +1,34 @@
+CREATE TABLE daily_readiness (
+    day                                TEXT NOT NULL PRIMARY KEY,
+    score                              INTEGER,
+    temperature_deviation              REAL,
+    temperature_trend_deviation        REAL,
+    contributors_activity_balance      INTEGER,
+    contributors_body_temperature      INTEGER,
+    contributors_hrv_balance           INTEGER,
+    contributors_previous_day_activity INTEGER,
+    contributors_previous_night        INTEGER,
+    contributors_recovery_index        INTEGER,
+    contributors_resting_heart_rate    INTEGER,
+    contributors_sleep_balance         INTEGER,
+    contributors_sleep_regularity      INTEGER
+);
+
+upsert:
+INSERT OR REPLACE INTO daily_readiness(
+    day, score, temperature_deviation, temperature_trend_deviation,
+    contributors_activity_balance, contributors_body_temperature,
+    contributors_hrv_balance, contributors_previous_day_activity,
+    contributors_previous_night, contributors_recovery_index,
+    contributors_resting_heart_rate, contributors_sleep_balance,
+    contributors_sleep_regularity
+) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+
+selectByDay:
+SELECT * FROM daily_readiness WHERE day = ?;
+
+selectInRange:
+SELECT * FROM daily_readiness WHERE day >= ? AND day <= ? ORDER BY day ASC;
+
+selectLatest:
+SELECT * FROM daily_readiness WHERE day <= ? ORDER BY day DESC LIMIT 1;
