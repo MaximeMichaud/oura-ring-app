@@ -12,10 +12,12 @@ class OuraApplication : Application() {
         super.onCreate()
         initKoin {
             androidContext(this@OuraApplication)
-            modules(module {
-                single { DriverFactory(this@OuraApplication) }
-                single { TokenStorage(this@OuraApplication) }
-            })
+            modules(
+                module {
+                    single { DriverFactory(this@OuraApplication) }
+                    single { TokenStorage(this@OuraApplication) }
+                },
+            )
         }
     }
 }

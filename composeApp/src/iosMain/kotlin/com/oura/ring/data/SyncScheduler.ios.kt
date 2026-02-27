@@ -7,17 +7,20 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 
-actual class SyncScheduler(private val syncManager: SyncManager) {
+actual class SyncScheduler(
+    private val syncManager: SyncManager,
+) {
     private var job: Job? = null
 
     actual fun schedulePeriodicSync(intervalMinutes: Int) {
         job?.cancel()
-        job = CoroutineScope(Dispatchers.Default).launch {
-            while (isActive) {
-                delay(intervalMinutes * 60 * 1000L)
-                syncManager.syncAll()
+        job =
+            CoroutineScope(Dispatchers.Default).launch {
+                while (isActive) {
+                    delay(intervalMinutes * 60 * 1000L)
+                    syncManager.syncAll()
+                }
             }
-        }
     }
 
     actual fun cancelSync() {

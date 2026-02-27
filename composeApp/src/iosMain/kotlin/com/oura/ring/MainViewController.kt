@@ -6,15 +6,19 @@ import com.oura.ring.data.db.TokenStorage
 import com.oura.ring.di.initKoin
 import org.koin.dsl.module
 
-fun MainViewController() = ComposeUIViewController(
-    configure = {
-        initKoin {
-            modules(module {
-                single { DriverFactory() }
-                single { TokenStorage() }
-            })
-        }
+@Suppress("ktlint:standard:function-naming")
+fun MainViewController() =
+    ComposeUIViewController(
+        configure = {
+            initKoin {
+                modules(
+                    module {
+                        single { DriverFactory() }
+                        single { TokenStorage() }
+                    },
+                )
+            }
+        },
+    ) {
+        OuraApp()
     }
-) {
-    OuraApp()
-}

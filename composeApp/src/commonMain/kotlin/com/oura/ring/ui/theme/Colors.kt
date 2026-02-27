@@ -29,47 +29,59 @@ object OuraColors {
     val SleepAwake = Red
 }
 
-data class Threshold(val cutoff: Float, val color: Color)
+data class Threshold(
+    val cutoff: Float,
+    val color: Color,
+)
 
 object Thresholds {
-    val Score = listOf(
-        Threshold(0f, OuraColors.RedLight),
-        Threshold(60f, OuraColors.Yellow),
-        Threshold(80f, OuraColors.GreenLight),
-    )
+    val Score =
+        listOf(
+            Threshold(0f, OuraColors.RedLight),
+            Threshold(60f, OuraColors.Yellow),
+            Threshold(80f, OuraColors.GreenLight),
+        )
 
-    val Spo2 = listOf(
-        Threshold(0f, OuraColors.RedLight),
-        Threshold(92f, OuraColors.Yellow),
-        Threshold(95f, OuraColors.GreenLight),
-    )
+    val Spo2 =
+        listOf(
+            Threshold(0f, OuraColors.RedLight),
+            Threshold(92f, OuraColors.Yellow),
+            Threshold(95f, OuraColors.GreenLight),
+        )
 
-    val Efficiency = listOf(
-        Threshold(0f, OuraColors.RedLight),
-        Threshold(75f, OuraColors.Yellow),
-        Threshold(90f, OuraColors.GreenLight),
-    )
+    val Efficiency =
+        listOf(
+            Threshold(0f, OuraColors.RedLight),
+            Threshold(75f, OuraColors.Yellow),
+            Threshold(90f, OuraColors.GreenLight),
+        )
 
-    val CardioAge = listOf(
-        Threshold(0f, OuraColors.GreenLight),
-        Threshold(40f, OuraColors.Yellow),
-        Threshold(55f, OuraColors.RedLight),
-    )
+    val CardioAge =
+        listOf(
+            Threshold(0f, OuraColors.GreenLight),
+            Threshold(40f, OuraColors.Yellow),
+            Threshold(55f, OuraColors.RedLight),
+        )
 
-    val Vo2Max = listOf(
-        Threshold(0f, OuraColors.RedLight),
-        Threshold(35f, OuraColors.Yellow),
-        Threshold(45f, OuraColors.GreenLight),
-    )
+    val Vo2Max =
+        listOf(
+            Threshold(0f, OuraColors.RedLight),
+            Threshold(35f, OuraColors.Yellow),
+            Threshold(45f, OuraColors.GreenLight),
+        )
 
-    val Bdi = listOf(
-        Threshold(0f, OuraColors.GreenLight),
-        Threshold(5f, OuraColors.Yellow),
-        Threshold(15f, OuraColors.RedLight),
-    )
+    val Bdi =
+        listOf(
+            Threshold(0f, OuraColors.GreenLight),
+            Threshold(5f, OuraColors.Yellow),
+            Threshold(15f, OuraColors.RedLight),
+        )
 }
 
-fun getThresholdColor(value: Float, thresholds: List<Threshold>): Color {
+fun getThresholdColor(
+    value: Float,
+    thresholds: List<Threshold>,
+): Color {
     var color = thresholds.firstOrNull()?.color ?: OuraColors.OnSurface
     for (t in thresholds) {
         if (value >= t.cutoff) color = t.color
@@ -77,16 +89,18 @@ fun getThresholdColor(value: Float, thresholds: List<Threshold>): Color {
     return color
 }
 
-val StressSummaryColors = mapOf(
-    "restored" to OuraColors.Green,
-    "normal" to OuraColors.Yellow,
-    "stressful" to OuraColors.RedLight,
-)
+val StressSummaryColors =
+    mapOf(
+        "restored" to OuraColors.Green,
+        "normal" to OuraColors.Yellow,
+        "stressful" to OuraColors.RedLight,
+    )
 
-val ResilienceLevelColors = mapOf(
-    "limited" to OuraColors.RedLight,
-    "adequate" to OuraColors.Yellow,
-    "solid" to OuraColors.OrangeLight,
-    "strong" to OuraColors.Green,
-    "exceptional" to OuraColors.Blue,
-)
+val ResilienceLevelColors =
+    mapOf(
+        "limited" to OuraColors.RedLight,
+        "adequate" to OuraColors.Yellow,
+        "solid" to OuraColors.OrangeLight,
+        "strong" to OuraColors.Green,
+        "exceptional" to OuraColors.Blue,
+    )

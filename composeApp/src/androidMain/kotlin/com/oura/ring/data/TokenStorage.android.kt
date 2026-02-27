@@ -3,7 +3,9 @@ package com.oura.ring.data.db
 import android.content.Context
 import android.content.SharedPreferences
 
-actual class TokenStorage(context: Context) {
+actual class TokenStorage(
+    context: Context,
+) {
     private val prefs: SharedPreferences =
         context.getSharedPreferences("oura_prefs", Context.MODE_PRIVATE)
 

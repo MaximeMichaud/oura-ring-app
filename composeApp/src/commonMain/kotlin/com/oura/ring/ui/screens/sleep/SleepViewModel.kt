@@ -26,12 +26,16 @@ data class SleepUiState(
     val breathingTrend: List<DayValue> = emptyList(),
 )
 
-class SleepViewModel(private val sleepRepo: SleepRepository) : ViewModel() {
-
+class SleepViewModel(
+    private val sleepRepo: SleepRepository,
+) : ViewModel() {
     private val _uiState = MutableStateFlow(SleepUiState())
     val uiState: StateFlow<SleepUiState> = _uiState.asStateFlow()
 
-    fun loadData(start: String, end: String) {
+    fun loadData(
+        start: String,
+        end: String,
+    ) {
         viewModelScope.launch(Dispatchers.Default) {
             _uiState.update { it.copy(loading = true) }
             try {

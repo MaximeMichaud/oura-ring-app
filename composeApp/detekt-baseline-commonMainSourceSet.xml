@@ -1,0 +1,83 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues/>
+  <CurrentIssues>
+    <ID>ClassNaming:Daily_activity.kt:Daily_activity</ID>
+    <ID>ClassNaming:Daily_cardiovascular_age.kt:Daily_cardiovascular_age</ID>
+    <ID>ClassNaming:Daily_readiness.kt:Daily_readiness</ID>
+    <ID>ClassNaming:Daily_resilience.kt:Daily_resilience</ID>
+    <ID>ClassNaming:Daily_sleep.kt:Daily_sleep</ID>
+    <ID>ClassNaming:Daily_spo2.kt:Daily_spo2</ID>
+    <ID>ClassNaming:Daily_stress.kt:Daily_stress</ID>
+    <ID>ClassNaming:Daily_vo2_max.kt:Daily_vo2_max</ID>
+    <ID>ClassNaming:Sleep_time.kt:Sleep_time</ID>
+    <ID>ClassNaming:Sync_log.kt:Sync_log</ID>
+    <ID>ComposableParamOrder:GaugeChart.kt:@Composable fun GaugeChart</ID>
+    <ID>ComposableParamOrder:HorizontalBarChart.kt:@Composable fun HorizontalBarChart</ID>
+    <ID>ComposableParamOrder:PieDonutChart.kt:@Composable fun PieDonutChart</ID>
+    <ID>ComposableParamOrder:StatCard.kt:@Composable fun StatCard</ID>
+    <ID>ComposableParamOrder:StatCard.kt:@Composable fun StatCardWithThreshold</ID>
+    <ID>CyclomaticComplexMethod:OuraApiClient.kt:OuraApiClient$suspend inline fun &lt;reified T&gt; fetchPageWithRetry: OuraPageResponse&lt;T&gt;</ID>
+    <ID>LongMethod:ActivityScreen.kt:@OptIn(ExperimentalLayoutApi::class) @Composable fun ActivityScreen</ID>
+    <ID>LongMethod:AppNavigation.kt:@Composable fun AppNavigation</ID>
+    <ID>LongMethod:BodyScreen.kt:@OptIn(ExperimentalLayoutApi::class) @Composable fun BodyScreen</ID>
+    <ID>LongMethod:OuraDatabaseImpl.kt:OuraDatabaseImpl.Schema$override fun create: QueryResult.Value&lt;Unit&gt;</ID>
+    <ID>LongMethod:OverviewScreen.kt:@OptIn(ExperimentalLayoutApi::class) @Composable fun OverviewScreen</ID>
+    <ID>LongMethod:SleepScreen.kt:@OptIn(ExperimentalLayoutApi::class, ExperimentalMaterial3Api::class) @Composable fun SleepScreen</ID>
+    <ID>MaxLineLength:DailyActivityQueries.kt:DailyActivityQueries$public fun selectInRange: Query&lt;Daily_activity&gt;</ID>
+    <ID>MaxLineLength:DailyActivityQueries.kt:DailyActivityQueries.SelectByDayQuery$override</ID>
+    <ID>MaxLineLength:DailyActivityQueries.kt:DailyActivityQueries.SelectInRangeQuery$override</ID>
+    <ID>MaxLineLength:DailyActivityQueries.kt:DailyActivityQueries.SelectLatestQuery$override</ID>
+    <ID>MaxLineLength:DailyCardiovascularAgeQueries.kt:DailyCardiovascularAgeQueries$public</ID>
+    <ID>MaxLineLength:DailyCardiovascularAgeQueries.kt:DailyCardiovascularAgeQueries$public fun selectInRange: Query&lt;Daily_cardiovascular_age&gt;</ID>
+    <ID>MaxLineLength:DailyCardiovascularAgeQueries.kt:DailyCardiovascularAgeQueries.SelectByDayQuery$override</ID>
+    <ID>MaxLineLength:DailyCardiovascularAgeQueries.kt:DailyCardiovascularAgeQueries.SelectInRangeQuery$override</ID>
+    <ID>MaxLineLength:DailyCardiovascularAgeQueries.kt:DailyCardiovascularAgeQueries.SelectLatestQuery$override</ID>
+    <ID>MaxLineLength:DailyReadinessQueries.kt:DailyReadinessQueries$public fun selectInRange: Query&lt;Daily_readiness&gt;</ID>
+    <ID>MaxLineLength:DailyReadinessQueries.kt:DailyReadinessQueries.SelectByDayQuery$override</ID>
+    <ID>MaxLineLength:DailyReadinessQueries.kt:DailyReadinessQueries.SelectInRangeQuery$override</ID>
+    <ID>MaxLineLength:DailyReadinessQueries.kt:DailyReadinessQueries.SelectLatestQuery$override</ID>
+    <ID>MaxLineLength:DailyResilienceQueries.kt:DailyResilienceQueries$public fun selectInRange: Query&lt;Daily_resilience&gt;</ID>
+    <ID>MaxLineLength:DailyResilienceQueries.kt:DailyResilienceQueries.SelectByDayQuery$override</ID>
+    <ID>MaxLineLength:DailyResilienceQueries.kt:DailyResilienceQueries.SelectInRangeQuery$override</ID>
+    <ID>MaxLineLength:DailyResilienceQueries.kt:DailyResilienceQueries.SelectLatestQuery$override</ID>
+    <ID>MaxLineLength:DailySleepQueries.kt:DailySleepQueries.SelectByDayQuery$override</ID>
+    <ID>MaxLineLength:DailySleepQueries.kt:DailySleepQueries.SelectInRangeQuery$override</ID>
+    <ID>MaxLineLength:DailySleepQueries.kt:DailySleepQueries.SelectLatestQuery$override</ID>
+    <ID>MaxLineLength:DailySpo2Queries.kt:DailySpo2Queries.SelectByDayQuery$override</ID>
+    <ID>MaxLineLength:DailySpo2Queries.kt:DailySpo2Queries.SelectInRangeQuery$override</ID>
+    <ID>MaxLineLength:DailySpo2Queries.kt:DailySpo2Queries.SelectLatestQuery$override</ID>
+    <ID>MaxLineLength:DailyStressQueries.kt:DailyStressQueries.SelectByDayQuery$override</ID>
+    <ID>MaxLineLength:DailyStressQueries.kt:DailyStressQueries.SelectInRangeQuery$override</ID>
+    <ID>MaxLineLength:DailyStressQueries.kt:DailyStressQueries.SelectLatestQuery$override</ID>
+    <ID>MaxLineLength:DailyVo2MaxQueries.kt:DailyVo2MaxQueries$public</ID>
+    <ID>MaxLineLength:DailyVo2MaxQueries.kt:DailyVo2MaxQueries.SelectByDayQuery$override</ID>
+    <ID>MaxLineLength:DailyVo2MaxQueries.kt:DailyVo2MaxQueries.SelectInRangeQuery$override</ID>
+    <ID>MaxLineLength:DailyVo2MaxQueries.kt:DailyVo2MaxQueries.SelectLatestQuery$override</ID>
+    <ID>MaxLineLength:Res.kt:Res$public</ID>
+    <ID>MaxLineLength:Res.kt:Res$public suspend</ID>
+    <ID>MaxLineLength:SleepTimeQueries.kt:SleepTimeQueries.SelectInRangeQuery$override</ID>
+    <ID>MaxLineLength:SleepTimeQueries.kt:SleepTimeQueries.SelectLatestQuery$override</ID>
+    <ID>MaxLineLength:SyncLogQueries.kt:SyncLogQueries$)</ID>
+    <ID>MaxLineLength:SyncLogQueries.kt:SyncLogQueries$public</ID>
+    <ID>MaxLineLength:SyncLogQueries.kt:SyncLogQueries$val</ID>
+    <ID>MaxLineLength:SyncLogQueries.kt:SyncLogQueries.GetLastSyncDateQuery$override</ID>
+    <ID>MaxLineLength:WorkoutQueries.kt:WorkoutQueries.SelectByDayQuery$override</ID>
+    <ID>MaxLineLength:WorkoutQueries.kt:WorkoutQueries.SelectInRangeQuery$override</ID>
+    <ID>ModifierMissing:ActivityScreen.kt:@OptIn(ExperimentalLayoutApi::class) @Composable fun ActivityScreen</ID>
+    <ID>ModifierMissing:AppNavigation.kt:@Composable fun AppNavigation</ID>
+    <ID>ModifierMissing:BodyScreen.kt:@OptIn(ExperimentalLayoutApi::class) @Composable fun BodyScreen</ID>
+    <ID>ModifierMissing:OuraApp.kt:@Composable fun OuraApp</ID>
+    <ID>ModifierMissing:OverviewScreen.kt:@OptIn(ExperimentalLayoutApi::class) @Composable fun OverviewScreen</ID>
+    <ID>ModifierMissing:ReadinessScreen.kt:@OptIn(ExperimentalLayoutApi::class) @Composable fun ReadinessScreen</ID>
+    <ID>ModifierMissing:SettingsScreen.kt:@Composable fun SettingsScreen</ID>
+    <ID>ModifierMissing:SleepScreen.kt:@OptIn(ExperimentalLayoutApi::class, ExperimentalMaterial3Api::class) @Composable fun SleepScreen</ID>
+    <ID>PackageNaming:ExpectResourceCollectors.kt:package oura_ring_app.composeapp.generated.resources</ID>
+    <ID>PackageNaming:Res.kt:package oura_ring_app.composeapp.generated.resources</ID>
+    <ID>ReturnCount:SyncManager.kt:SyncManager$suspend fun syncAll: SyncResult</ID>
+    <ID>SwallowedException:SyncManager.kt:SyncManager$e: TokenExpiredException</ID>
+    <ID>ThrowsCount:OuraApiClient.kt:OuraApiClient$suspend inline fun &lt;reified T&gt; fetchPageWithRetry: OuraPageResponse&lt;T&gt;</ID>
+    <ID>TooManyFunctions:BodyRepository.kt:BodyRepository</ID>
+    <ID>TooManyFunctions:SleepRepository.kt:SleepRepository</ID>
+  </CurrentIssues>
+</SmellBaseline>

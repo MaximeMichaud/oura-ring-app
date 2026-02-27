@@ -23,7 +23,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.oura.ring.ui.theme.OuraColors
 
-data class PieSlice(val label: String, val value: Float, val color: Color)
+data class PieSlice(
+    val label: String,
+    val value: Float,
+    val color: Color,
+)
 
 @Composable
 fun PieDonutChart(
@@ -39,10 +43,11 @@ fun PieDonutChart(
             val strokeWidth = size.minDimension * (1f - holeRatio) / 2f
             val arcRadius = (size.minDimension - strokeWidth) / 2f
             val arcSize = Size(arcRadius * 2, arcRadius * 2)
-            val topLeft = Offset(
-                (size.width - arcSize.width) / 2,
-                (size.height - arcSize.height) / 2,
-            )
+            val topLeft =
+                Offset(
+                    (size.width - arcSize.width) / 2,
+                    (size.height - arcSize.height) / 2,
+                )
 
             var currentAngle = -90f
             slices.forEach { slice ->

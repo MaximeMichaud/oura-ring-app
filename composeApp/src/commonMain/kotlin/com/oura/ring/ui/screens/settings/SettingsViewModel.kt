@@ -22,7 +22,6 @@ class SettingsViewModel(
     private val tokenStorage: TokenStorage,
     private val syncManager: SyncManager,
 ) : ViewModel() {
-
     private val _uiState = MutableStateFlow(SettingsUiState())
     val uiState: StateFlow<SettingsUiState> = _uiState.asStateFlow()
 
@@ -57,12 +56,13 @@ class SettingsViewModel(
         viewModelScope.launch {
             _uiState.update { it.copy(syncing = true, syncStatus = "Syncing...") }
             val result = syncManager.syncAll()
-            val status = when (result) {
-                is SyncResult.Success -> "Synced ${result.counts.values.sum()} records"
-                is SyncResult.TokenExpired -> "Token expired  - update in settings"
-                is SyncResult.AlreadyRunning -> "Sync already running"
-                is SyncResult.Error -> "Error: ${result.message}"
-            }
+            val status =
+                when (result) {
+                    is SyncResult.Success -> "Synced ${result.counts.values.sum()} records"
+                    is SyncResult.TokenExpired -> "Token expired  - update in settings"
+                    is SyncResult.AlreadyRunning -> "Sync already running"
+                    is SyncResult.Error -> "Error: ${result.message}"
+                }
             _uiState.update { it.copy(syncing = false, syncStatus = status) }
         }
     }

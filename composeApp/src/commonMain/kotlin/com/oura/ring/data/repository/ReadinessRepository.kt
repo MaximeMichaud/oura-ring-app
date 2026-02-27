@@ -8,7 +8,10 @@ class ReadinessRepository(
     private val db: OuraDatabase,
     private val api: OuraApiClient,
 ) {
-    suspend fun syncFromApi(start: String, end: String): Int {
+    suspend fun syncFromApi(
+        start: String,
+        end: String,
+    ): Int {
         val records = api.fetchAll<ApiDailyReadiness>("daily_readiness", start, end)
         db.transaction {
             records.forEach { r ->
@@ -32,17 +35,28 @@ class ReadinessRepository(
         return records.size
     }
 
-    fun latest(end: String) =
-        db.dailyReadinessQueries.selectLatest(end).executeAsOneOrNull()
+    fun latest(end: String) = db.dailyReadinessQueries.selectLatest(end).executeAsOneOrNull()
 
-    fun trend(start: String, end: String): List<DayValue> =
-        db.dailyReadinessQueries.selectInRange(start, end).executeAsList()
+    fun trend(
+        start: String,
+        end: String,
+    ): List<DayValue> =
+        db.dailyReadinessQueries
+            .selectInRange(start, end)
+            .executeAsList()
             .mapNotNull { r -> r.score?.let { DayValue(r.day, it.toDouble()) } }
 
-    fun temperatureTrend(start: String, end: String): List<DayValue> =
-        db.dailyReadinessQueries.selectInRange(start, end).executeAsList()
+    fun temperatureTrend(
+        start: String,
+        end: String,
+    ): List<DayValue> =
+        db.dailyReadinessQueries
+            .selectInRange(start, end)
+            .executeAsList()
             .mapNotNull { r -> r.temperature_deviation?.let { DayValue(r.day, it) } }
 
-    fun inRange(start: String, end: String) =
-        db.dailyReadinessQueries.selectInRange(start, end).executeAsList()
+    fun inRange(
+        start: String,
+        end: String,
+    ) = db.dailyReadinessQueries.selectInRange(start, end).executeAsList()
 }

@@ -9,8 +9,17 @@ import com.oura.ring.db.OuraDatabase
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
-data class DayValue(val day: String, val value: Double)
-data class SleepPhaseBreakdown(val deep: Double, val light: Double, val rem: Double, val awake: Double)
+data class DayValue(
+    val day: String,
+    val value: Double,
+)
+
+data class SleepPhaseBreakdown(
+    val deep: Double,
+    val light: Double,
+    val rem: Double,
+    val awake: Double,
+)
 
 class SleepRepository(
     private val db: OuraDatabase,
@@ -19,7 +28,10 @@ class SleepRepository(
 ) {
     // --- Sync ---
 
-    suspend fun syncSleep(start: String, end: String): Int {
+    suspend fun syncSleep(
+        start: String,
+        end: String,
+    ): Int {
         val records = api.fetchAll<ApiSleep>("sleep", start, end)
         db.transaction {
             records.forEach { r ->
@@ -57,7 +69,10 @@ class SleepRepository(
         return records.size
     }
 
-    suspend fun syncDailySleep(start: String, end: String): Int {
+    suspend fun syncDailySleep(
+        start: String,
+        end: String,
+    ): Int {
         val records = api.fetchAll<ApiDailySleep>("daily_sleep", start, end)
         db.transaction {
             records.forEach { r ->
@@ -77,7 +92,10 @@ class SleepRepository(
         return records.size
     }
 
-    suspend fun syncSleepTime(start: String, end: String): Int {
+    suspend fun syncSleepTime(
+        start: String,
+        end: String,
+    ): Int {
         val records = api.fetchAll<ApiSleepTime>("sleep_time", start, end)
         db.transaction {
             records.forEach { r ->
@@ -98,11 +116,12 @@ class SleepRepository(
 
     // --- Read queries ---
 
-    fun availableNights(start: String, end: String): List<String> =
-        db.sleepQueries.availableNights(start, end).executeAsList()
+    fun availableNights(
+        start: String,
+        end: String,
+    ): List<String> = db.sleepQueries.availableNights(start, end).executeAsList()
 
-    fun sleepSession(night: String) =
-        db.sleepQueries.selectPrimaryByDay(night).executeAsOneOrNull()
+    fun sleepSession(night: String) = db.sleepQueries.selectPrimaryByDay(night).executeAsOneOrNull()
 
     fun sleepPhaseBreakdown(night: String): SleepPhaseBreakdown? {
         val s = sleepSession(night) ?: return null
@@ -114,7 +133,10 @@ class SleepRepository(
         )
     }
 
-    fun sleepDurationBreakdown(start: String, end: String): List<SleepDurationPoint> {
+    fun sleepDurationBreakdown(
+        start: String,
+        end: String,
+    ): List<SleepDurationPoint> {
         val rows = db.sleepQueries.selectPrimaryInRange(start, end).executeAsList()
         val seen = mutableSetOf<String>()
         return rows.filter { seen.add(it.day) }.map { s ->
@@ -128,52 +150,74 @@ class SleepRepository(
         }
     }
 
-    fun hrvTrend(start: String, end: String): List<DayValue> {
+    fun hrvTrend(
+        start: String,
+        end: String,
+    ): List<DayValue> {
         val rows = db.sleepQueries.selectPrimaryInRange(start, end).executeAsList()
         val seen = mutableSetOf<String>()
-        return rows.filter { seen.add(it.day) }
+        return rows
+            .filter { seen.add(it.day) }
             .mapNotNull { s -> s.average_hrv?.let { DayValue(s.day, it) } }
     }
 
-    fun restingHrTrend(start: String, end: String): List<DayValue> {
+    fun restingHrTrend(
+        start: String,
+        end: String,
+    ): List<DayValue> {
         val rows = db.sleepQueries.selectPrimaryInRange(start, end).executeAsList()
         val seen = mutableSetOf<String>()
-        return rows.filter { seen.add(it.day) }
+        return rows
+            .filter { seen.add(it.day) }
             .mapNotNull { s -> s.lowest_heart_rate?.let { DayValue(s.day, it.toDouble()) } }
     }
 
-    fun efficiencyTrend(start: String, end: String): List<DayValue> {
+    fun efficiencyTrend(
+        start: String,
+        end: String,
+    ): List<DayValue> {
         val rows = db.sleepQueries.selectPrimaryInRange(start, end).executeAsList()
         val seen = mutableSetOf<String>()
-        return rows.filter { seen.add(it.day) }
+        return rows
+            .filter { seen.add(it.day) }
             .mapNotNull { s -> s.efficiency?.let { DayValue(s.day, it.toDouble()) } }
     }
 
-    fun latencyTrend(start: String, end: String): List<DayValue> {
+    fun latencyTrend(
+        start: String,
+        end: String,
+    ): List<DayValue> {
         val rows = db.sleepQueries.selectPrimaryInRange(start, end).executeAsList()
         val seen = mutableSetOf<String>()
-        return rows.filter { seen.add(it.day) }
+        return rows
+            .filter { seen.add(it.day) }
             .mapNotNull { s -> s.latency?.let { DayValue(s.day, it / 60.0) } }
     }
 
-    fun breathingTrend(start: String, end: String): List<DayValue> {
+    fun breathingTrend(
+        start: String,
+        end: String,
+    ): List<DayValue> {
         val rows = db.sleepQueries.selectPrimaryInRange(start, end).executeAsList()
         val seen = mutableSetOf<String>()
-        return rows.filter { seen.add(it.day) }
+        return rows
+            .filter { seen.add(it.day) }
             .mapNotNull { s -> s.average_breath?.let { DayValue(s.day, it) } }
     }
 
-    fun dailySleepInRange(start: String, end: String) =
-        db.dailySleepQueries.selectInRange(start, end).executeAsList()
+    fun dailySleepInRange(
+        start: String,
+        end: String,
+    ) = db.dailySleepQueries.selectInRange(start, end).executeAsList()
 
-    fun latestDailySleep(end: String) =
-        db.dailySleepQueries.selectLatest(end).executeAsOneOrNull()
+    fun latestDailySleep(end: String) = db.dailySleepQueries.selectLatest(end).executeAsOneOrNull()
 
-    fun latestSleepTime(end: String) =
-        db.sleepTimeQueries.selectLatest(end).executeAsOneOrNull()
+    fun latestSleepTime(end: String) = db.sleepTimeQueries.selectLatest(end).executeAsOneOrNull()
 
-    fun napFrequency(start: String, end: String) =
-        db.sleepQueries.napFrequency(start, end).executeAsList()
+    fun napFrequency(
+        start: String,
+        end: String,
+    ) = db.sleepQueries.napFrequency(start, end).executeAsList()
 }
 
 data class SleepDurationPoint(

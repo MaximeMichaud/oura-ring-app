@@ -48,16 +48,23 @@ class OverviewViewModel(
     private val bodyRepo: BodyRepository,
     private val syncManager: SyncManager,
 ) : ViewModel() {
-
     private val _uiState = MutableStateFlow(OverviewUiState())
     val uiState: StateFlow<OverviewUiState> = _uiState.asStateFlow()
 
-    fun loadData(start: String, end: String) {
+    fun loadData(
+        start: String,
+        end: String,
+    ) {
         viewModelScope.launch(Dispatchers.Default) {
             _uiState.update { it.copy(loading = true) }
             try {
                 val scores = async { loadLatestScores(end) }
-                val sleepTrend = async { sleepRepo.dailySleepInRange(start, end).mapNotNull { r -> r.score?.let { DayValue(r.day, it.toDouble()) } } }
+                val sleepTrend =
+                    async {
+                        sleepRepo.dailySleepInRange(start, end).mapNotNull { r ->
+                            r.score?.let { DayValue(r.day, it.toDouble()) }
+                        }
+                    }
                 val readTrend = async { readinessRepo.trend(start, end) }
                 val steps = async { activityRepo.stepsTrend(start, end) }
                 val breakdown = async { sleepRepo.sleepDurationBreakdown(start, end) }

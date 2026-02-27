@@ -1,0 +1,10 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues/>
+  <CurrentIssues>
+    <ID>FunctionNaming:MainViewController.kt:@Suppress("ktlint:standard:function-naming") fun MainViewController</ID>
+    <ID>InvalidPackageDeclaration:DriverFactory.ios.kt:package com.oura.ring.data.db</ID>
+    <ID>InvalidPackageDeclaration:SyncScheduler.ios.kt:package com.oura.ring.data.sync</ID>
+    <ID>InvalidPackageDeclaration:TokenStorage.ios.kt:package com.oura.ring.data.db</ID>
+  </CurrentIssues>
+</SmellBaseline>

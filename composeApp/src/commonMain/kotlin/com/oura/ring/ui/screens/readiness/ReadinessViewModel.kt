@@ -21,29 +21,36 @@ data class ReadinessUiState(
     val tempTrend: List<DayValue> = emptyList(),
 )
 
-class ReadinessViewModel(private val repo: ReadinessRepository) : ViewModel() {
-
+class ReadinessViewModel(
+    private val repo: ReadinessRepository,
+) : ViewModel() {
     private val _uiState = MutableStateFlow(ReadinessUiState())
     val uiState: StateFlow<ReadinessUiState> = _uiState.asStateFlow()
 
-    fun loadData(start: String, end: String) {
+    fun loadData(
+        start: String,
+        end: String,
+    ) {
         viewModelScope.launch(Dispatchers.Default) {
             _uiState.update { it.copy(loading = true) }
             try {
                 val latest = repo.latest(end)
-                val contributors = latest?.let {
-                    listOfNotNull(
-                        it.contributors_activity_balance?.let { v -> BarItem("Activity Balance", v.toFloat()) },
-                        it.contributors_body_temperature?.let { v -> BarItem("Body Temp", v.toFloat()) },
-                        it.contributors_hrv_balance?.let { v -> BarItem("HRV Balance", v.toFloat()) },
-                        it.contributors_previous_day_activity?.let { v -> BarItem("Prev Day Activity", v.toFloat()) },
-                        it.contributors_previous_night?.let { v -> BarItem("Previous Night", v.toFloat()) },
-                        it.contributors_recovery_index?.let { v -> BarItem("Recovery Index", v.toFloat()) },
-                        it.contributors_resting_heart_rate?.let { v -> BarItem("Resting HR", v.toFloat()) },
-                        it.contributors_sleep_balance?.let { v -> BarItem("Sleep Balance", v.toFloat()) },
-                        it.contributors_sleep_regularity?.let { v -> BarItem("Sleep Regularity", v.toFloat()) },
-                    )
-                } ?: emptyList()
+                val contributors =
+                    latest?.let {
+                        listOfNotNull(
+                            it.contributors_activity_balance?.let { v -> BarItem("Activity Balance", v.toFloat()) },
+                            it.contributors_body_temperature?.let { v -> BarItem("Body Temp", v.toFloat()) },
+                            it.contributors_hrv_balance?.let { v -> BarItem("HRV Balance", v.toFloat()) },
+                            it.contributors_previous_day_activity?.let { v ->
+                                BarItem("Prev Day Activity", v.toFloat())
+                            },
+                            it.contributors_previous_night?.let { v -> BarItem("Previous Night", v.toFloat()) },
+                            it.contributors_recovery_index?.let { v -> BarItem("Recovery Index", v.toFloat()) },
+                            it.contributors_resting_heart_rate?.let { v -> BarItem("Resting HR", v.toFloat()) },
+                            it.contributors_sleep_balance?.let { v -> BarItem("Sleep Balance", v.toFloat()) },
+                            it.contributors_sleep_regularity?.let { v -> BarItem("Sleep Regularity", v.toFloat()) },
+                        )
+                    } ?: emptyList()
 
                 _uiState.update {
                     it.copy(

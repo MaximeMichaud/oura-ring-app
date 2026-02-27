@@ -11,10 +11,12 @@ import org.koin.dsl.module
 
 fun main() {
     initKoin {
-        modules(module {
-            single { DriverFactory() }
-            single { TokenStorage() }
-        })
+        modules(
+            module {
+                single { DriverFactory() }
+                single { TokenStorage() }
+            },
+        )
     }
     application {
         Window(

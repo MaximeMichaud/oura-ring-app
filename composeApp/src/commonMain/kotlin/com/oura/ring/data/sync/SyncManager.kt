@@ -8,18 +8,25 @@ import com.oura.ring.data.repository.ReadinessRepository
 import com.oura.ring.data.repository.SleepRepository
 import com.oura.ring.data.repository.SyncRepository
 import kotlinx.coroutines.sync.Mutex
-import kotlin.time.Clock
 import kotlinx.datetime.DateTimeUnit
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.minus
 import kotlinx.datetime.toLocalDateTime
+import kotlin.time.Clock
 
 sealed class SyncResult {
-    data class Success(val counts: Map<String, Int>) : SyncResult()
+    data class Success(
+        val counts: Map<String, Int>,
+    ) : SyncResult()
+
     data object AlreadyRunning : SyncResult()
+
     data object TokenExpired : SyncResult()
-    data class Error(val message: String) : SyncResult()
+
+    data class Error(
+        val message: String,
+    ) : SyncResult()
 }
 
 class SyncManager(
@@ -40,9 +47,12 @@ class SyncManager(
         if (!mutex.tryLock()) return SyncResult.AlreadyRunning
 
         try {
-            val today = Clock.System.now()
-                .toLocalDateTime(TimeZone.currentSystemDefault())
-                .date.toString()
+            val today =
+                Clock.System
+                    .now()
+                    .toLocalDateTime(TimeZone.currentSystemDefault())
+                    .date
+                    .toString()
 
             val results = mutableMapOf<String, Int>()
 
@@ -69,7 +79,8 @@ class SyncManager(
     private fun getStartDate(endpointName: String): String {
         val lastSync = syncRepo.getLastSyncDate(endpointName)
         return if (lastSync != null) {
-            LocalDate.parse(lastSync)
+            LocalDate
+                .parse(lastSync)
                 .minus(OVERLAP_DAYS, DateTimeUnit.DAY)
                 .toString()
         } else {
@@ -77,8 +88,12 @@ class SyncManager(
         }
     }
 
-    private suspend fun syncEndpoint(name: String, start: String, end: String): Int {
-        return when (name) {
+    private suspend fun syncEndpoint(
+        name: String,
+        start: String,
+        end: String,
+    ): Int =
+        when (name) {
             "sleep" -> sleepRepo.syncSleep(start, end)
             "daily_sleep" -> sleepRepo.syncDailySleep(start, end)
             "daily_readiness" -> readinessRepo.syncFromApi(start, end)
@@ -92,5 +107,4 @@ class SyncManager(
             "sleep_time" -> sleepRepo.syncSleepTime(start, end)
             else -> 0
         }
-    }
 }

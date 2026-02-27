@@ -50,17 +50,17 @@ fun AppNavigation() {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
 
-    val items = listOf(
-        NavItem(Screen.Overview, Icons.Default.Home),
-        NavItem(Screen.Sleep, Icons.Default.Nightlight),
-        NavItem(Screen.Readiness, Icons.Default.FavoriteBorder),
-        NavItem(Screen.Activity, Icons.AutoMirrored.Filled.DirectionsRun),
-        NavItem(Screen.Body, Icons.Default.Person),
-        NavItem(Screen.Settings, Icons.Default.Settings),
-    )
+    val items =
+        listOf(
+            NavItem(Screen.Overview, Icons.Default.Home),
+            NavItem(Screen.Sleep, Icons.Default.Nightlight),
+            NavItem(Screen.Readiness, Icons.Default.FavoriteBorder),
+            NavItem(Screen.Activity, Icons.AutoMirrored.Filled.DirectionsRun),
+            NavItem(Screen.Body, Icons.Default.Person),
+            NavItem(Screen.Settings, Icons.Default.Settings),
+        )
 
-    fun isSelected(item: NavItem) =
-        currentDestination?.hierarchy?.any { it.route == item.screen.route } == true
+    fun isSelected(item: NavItem) = currentDestination?.hierarchy?.any { it.route == item.screen.route } == true
 
     fun onNav(item: NavItem) {
         navController.navigate(item.screen.route) {
@@ -108,7 +108,7 @@ fun AppNavigation() {
                     Modifier
                         .fillMaxSize()
                         .widthIn(max = 900.dp)
-                        .align(Alignment.CenterVertically)
+                        .align(Alignment.CenterVertically),
                 )
             }
         } else {

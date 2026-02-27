@@ -10,14 +10,21 @@ import kotlin.math.min
 import kotlin.math.pow
 
 class TokenExpiredException : Exception("Oura API token expired or invalid")
-class ApiException(message: String) : Exception(message)
 
-class OuraApiClient(@PublishedApi internal val httpClient: HttpClient) {
+class ApiException(
+    message: String,
+) : Exception(message)
 
+class OuraApiClient(
+    @PublishedApi internal val httpClient: HttpClient,
+) {
     companion object {
         @PublishedApi internal const val BASE_URL = "https://api.ouraring.com/v2/usercollection"
+
         @PublishedApi internal const val MAX_RETRIES = 5
+
         @PublishedApi internal const val MAX_RETRY_AFTER_SEC = 300
+
         @PublishedApi internal const val MAX_BACKOFF_MS = 120_000L
     }
 
@@ -48,33 +55,48 @@ class OuraApiClient(@PublishedApi internal val httpClient: HttpClient) {
 
         while (true) {
             try {
-                val response: HttpResponse = httpClient.get("$BASE_URL/$endpoint") {
-                    if (nextToken != null) {
-                        parameter("next_token", nextToken)
-                    } else {
-                        parameter("start_date", startDate)
-                        parameter("end_date", endDate)
+                val response: HttpResponse =
+                    httpClient.get("$BASE_URL/$endpoint") {
+                        if (nextToken != null) {
+                            parameter("next_token", nextToken)
+                        } else {
+                            parameter("start_date", startDate)
+                            parameter("end_date", endDate)
+                        }
                     }
-                }
 
                 when (response.status.value) {
-                    200 -> return response.body()
-                    401 -> throw TokenExpiredException()
-                    404 -> return OuraPageResponse(emptyList())
+                    200 -> {
+                        return response.body()
+                    }
+
+                    401 -> {
+                        throw TokenExpiredException()
+                    }
+
+                    404 -> {
+                        return OuraPageResponse(emptyList())
+                    }
+
                     429 -> {
-                        val retryAfter = response.headers["Retry-After"]
-                            ?.toIntOrNull()
-                            ?.coerceAtMost(MAX_RETRY_AFTER_SEC)
-                            ?: 60
+                        val retryAfter =
+                            response.headers["Retry-After"]
+                                ?.toIntOrNull()
+                                ?.coerceAtMost(MAX_RETRY_AFTER_SEC)
+                                ?: 60
                         delay(retryAfter * 1000L)
                     }
+
                     in 500..599 -> {
                         if (++attempt >= MAX_RETRIES) {
                             throw ApiException("Server error ${response.status} after $MAX_RETRIES retries")
                         }
                         delay(min(2.0.pow(attempt).toLong() * 2000, MAX_BACKOFF_MS))
                     }
-                    else -> throw ApiException("Unexpected status: ${response.status}")
+
+                    else -> {
+                        throw ApiException("Unexpected status: ${response.status}")
+                    }
                 }
             } catch (e: TokenExpiredException) {
                 throw e

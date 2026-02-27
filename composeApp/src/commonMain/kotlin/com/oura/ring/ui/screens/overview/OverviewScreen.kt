@@ -27,20 +27,22 @@ import com.oura.ring.ui.theme.OuraColors
 import com.oura.ring.ui.theme.ResilienceLevelColors
 import com.oura.ring.ui.theme.StressSummaryColors
 import com.oura.ring.ui.theme.Thresholds
-import kotlin.time.Clock
 import kotlinx.datetime.DateTimeUnit
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.minus
 import kotlinx.datetime.toLocalDateTime
 import org.koin.compose.viewmodel.koinViewModel
+import kotlin.time.Clock
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun OverviewScreen(
-    viewModel: OverviewViewModel = koinViewModel(),
-) {
+fun OverviewScreen(viewModel: OverviewViewModel = koinViewModel()) {
     val state by viewModel.uiState.collectAsState()
-    val today = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).date
+    val today =
+        Clock.System
+            .now()
+            .toLocalDateTime(TimeZone.currentSystemDefault())
+            .date
     val start = today.minus(30, DateTimeUnit.DAY).toString()
     val end = today.toString()
 

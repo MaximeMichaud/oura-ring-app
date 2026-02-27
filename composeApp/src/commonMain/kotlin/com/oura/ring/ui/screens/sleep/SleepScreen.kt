@@ -14,10 +14,10 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExposedDropdownMenuAnchorType
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ExposedDropdownMenuAnchorType
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -36,18 +36,22 @@ import com.oura.ring.ui.components.StatCard
 import com.oura.ring.ui.components.StatCardWithThreshold
 import com.oura.ring.ui.theme.OuraColors
 import com.oura.ring.ui.theme.Thresholds
-import kotlin.time.Clock
 import kotlinx.datetime.DateTimeUnit
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.minus
 import kotlinx.datetime.toLocalDateTime
 import org.koin.compose.viewmodel.koinViewModel
+import kotlin.time.Clock
 
 @OptIn(ExperimentalLayoutApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun SleepScreen(viewModel: SleepViewModel = koinViewModel()) {
     val state by viewModel.uiState.collectAsState()
-    val today = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).date
+    val today =
+        Clock.System
+            .now()
+            .toLocalDateTime(TimeZone.currentSystemDefault())
+            .date
     val start = today.minus(90, DateTimeUnit.DAY).toString()
     val end = today.toString()
 
@@ -153,12 +157,13 @@ fun SleepScreen(viewModel: SleepViewModel = koinViewModel()) {
             state.phaseBreakdown?.let { pb ->
                 Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
                     PieDonutChart(
-                        slices = listOf(
-                            PieSlice("Deep", pb.deep.toFloat(), OuraColors.SleepDeep),
-                            PieSlice("Light", pb.light.toFloat(), OuraColors.SleepLight),
-                            PieSlice("REM", pb.rem.toFloat(), OuraColors.SleepRem),
-                            PieSlice("Awake", pb.awake.toFloat(), OuraColors.SleepAwake),
-                        ),
+                        slices =
+                            listOf(
+                                PieSlice("Deep", pb.deep.toFloat(), OuraColors.SleepDeep),
+                                PieSlice("Light", pb.light.toFloat(), OuraColors.SleepLight),
+                                PieSlice("REM", pb.rem.toFloat(), OuraColors.SleepRem),
+                                PieSlice("Awake", pb.awake.toFloat(), OuraColors.SleepAwake),
+                            ),
                     )
                 }
             }

@@ -1,0 +1,10 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues/>
+  <CurrentIssues>
+    <ID>InvalidPackageDeclaration:DriverFactory.desktop.kt:package com.oura.ring.data.db</ID>
+    <ID>InvalidPackageDeclaration:SyncScheduler.desktop.kt:package com.oura.ring.data.sync</ID>
+    <ID>InvalidPackageDeclaration:TokenStorage.desktop.kt:package com.oura.ring.data.db</ID>
+    <ID>PackageNaming:ActualResourceCollectors.kt:package oura_ring_app.composeapp.generated.resources</ID>
+  </CurrentIssues>
+</SmellBaseline>

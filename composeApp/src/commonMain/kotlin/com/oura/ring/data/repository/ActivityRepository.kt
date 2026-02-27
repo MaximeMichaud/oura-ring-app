@@ -9,7 +9,10 @@ class ActivityRepository(
     private val db: OuraDatabase,
     private val api: OuraApiClient,
 ) {
-    suspend fun syncActivity(start: String, end: String): Int {
+    suspend fun syncActivity(
+        start: String,
+        end: String,
+    ): Int {
         val records = api.fetchAll<ApiDailyActivity>("daily_activity", start, end)
         db.transaction {
             records.forEach { r ->
@@ -47,7 +50,10 @@ class ActivityRepository(
         return records.size
     }
 
-    suspend fun syncWorkouts(start: String, end: String): Int {
+    suspend fun syncWorkouts(
+        start: String,
+        end: String,
+    ): Int {
         val records = api.fetchAll<ApiWorkout>("workout", start, end)
         db.transaction {
             records.forEach { r ->
@@ -69,16 +75,24 @@ class ActivityRepository(
         return records.size
     }
 
-    fun latest(end: String) =
-        db.dailyActivityQueries.selectLatest(end).executeAsOneOrNull()
+    fun latest(end: String) = db.dailyActivityQueries.selectLatest(end).executeAsOneOrNull()
 
-    fun trend(start: String, end: String) =
-        db.dailyActivityQueries.selectInRange(start, end).executeAsList()
+    fun trend(
+        start: String,
+        end: String,
+    ) = db.dailyActivityQueries.selectInRange(start, end).executeAsList()
 
-    fun stepsTrend(start: String, end: String): List<DayValue> =
-        db.dailyActivityQueries.selectInRange(start, end).executeAsList()
+    fun stepsTrend(
+        start: String,
+        end: String,
+    ): List<DayValue> =
+        db.dailyActivityQueries
+            .selectInRange(start, end)
+            .executeAsList()
             .mapNotNull { r -> r.steps?.let { DayValue(r.day, it.toDouble()) } }
 
-    fun workouts(start: String, end: String) =
-        db.workoutQueries.selectInRange(start, end).executeAsList()
+    fun workouts(
+        start: String,
+        end: String,
+    ) = db.workoutQueries.selectInRange(start, end).executeAsList()
 }

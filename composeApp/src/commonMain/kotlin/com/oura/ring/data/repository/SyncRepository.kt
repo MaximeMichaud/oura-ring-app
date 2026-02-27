@@ -1,23 +1,30 @@
 package com.oura.ring.data.repository
 
 import com.oura.ring.db.OuraDatabase
-import kotlin.time.Clock
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
+import kotlin.time.Clock
 
-class SyncRepository(private val db: OuraDatabase) {
+class SyncRepository(
+    private val db: OuraDatabase,
+) {
+    private fun now(): String =
+        Clock.System
+            .now()
+            .toLocalDateTime(TimeZone.currentSystemDefault())
+            .toString()
 
-    private fun now(): String = Clock.System.now()
-        .toLocalDateTime(TimeZone.currentSystemDefault())
-        .toString()
-
-    fun getLastSyncDate(endpoint: String): String? {
-        return db.syncLogQueries.getLastSyncDate(endpoint)
+    fun getLastSyncDate(endpoint: String): String? =
+        db.syncLogQueries
+            .getLastSyncDate(endpoint)
             .executeAsOneOrNull()
             ?.last_sync_date
-    }
 
-    fun recordSuccess(endpoint: String, syncDate: String, count: Int) {
+    fun recordSuccess(
+        endpoint: String,
+        syncDate: String,
+        count: Int,
+    ) {
         val ts = now()
         db.syncLogQueries.upsertSuccess(
             endpoint = endpoint,
@@ -28,7 +35,10 @@ class SyncRepository(private val db: OuraDatabase) {
         )
     }
 
-    fun recordFailure(endpoint: String, error: String) {
+    fun recordFailure(
+        endpoint: String,
+        error: String,
+    ) {
         val ts = now()
         db.syncLogQueries.insertIfMissing(endpoint)
         db.syncLogQueries.recordFailure(

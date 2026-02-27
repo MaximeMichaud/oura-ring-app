@@ -1,0 +1,11 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues/>
+  <CurrentIssues>
+    <ID>InvalidPackageDeclaration:DriverFactory.android.kt:package com.oura.ring.data.db</ID>
+    <ID>InvalidPackageDeclaration:OuraSyncWorker.kt:package com.oura.ring.data.sync</ID>
+    <ID>InvalidPackageDeclaration:SyncScheduler.android.kt:package com.oura.ring.data.sync</ID>
+    <ID>InvalidPackageDeclaration:TokenStorage.android.kt:package com.oura.ring.data.db</ID>
+    <ID>PackageNaming:ActualResourceCollectors.kt:package oura_ring_app.composeapp.generated.resources</ID>
+  </CurrentIssues>
+</SmellBaseline>

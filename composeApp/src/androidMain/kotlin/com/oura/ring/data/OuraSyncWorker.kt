@@ -10,16 +10,15 @@ import org.koin.core.component.inject
 class OuraSyncWorker(
     context: Context,
     params: WorkerParameters,
-) : CoroutineWorker(context, params), KoinComponent {
-
+) : CoroutineWorker(context, params),
+    KoinComponent {
     private val syncManager: SyncManager by inject()
 
-    override suspend fun doWork(): Result {
-        return when (syncManager.syncAll()) {
+    override suspend fun doWork(): Result =
+        when (syncManager.syncAll()) {
             is SyncResult.Success -> Result.success()
             is SyncResult.TokenExpired -> Result.failure()
             is SyncResult.AlreadyRunning -> Result.retry()
             is SyncResult.Error -> Result.retry()
         }
-    }
 }

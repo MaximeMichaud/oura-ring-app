@@ -26,49 +26,52 @@ import org.koin.core.context.startKoin
 import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
 
-val jsonInstance = Json {
-    ignoreUnknownKeys = true
-    isLenient = true
-    coerceInputValues = true
-}
-
-val dataModule = module {
-    single { get<DriverFactory>().createDriver() }
-    single { OuraDatabase(get()) }
-    single { jsonInstance }
-
-    single {
-        val tokenStorage = get<TokenStorage>()
-        HttpClient {
-            install(ContentNegotiation) {
-                json(jsonInstance)
-            }
-            defaultRequest {
-                val token = tokenStorage.getToken() ?: ""
-                headers.append("Authorization", "Bearer $token")
-            }
-        }
+val jsonInstance =
+    Json {
+        ignoreUnknownKeys = true
+        isLenient = true
+        coerceInputValues = true
     }
 
-    single { OuraApiClient(get()) }
+val dataModule =
+    module {
+        single { get<DriverFactory>().createDriver() }
+        single { OuraDatabase(get()) }
+        single { jsonInstance }
 
-    single { SleepRepository(get(), get(), get()) }
-    single { ReadinessRepository(get(), get()) }
-    single { ActivityRepository(get(), get()) }
-    single { BodyRepository(get(), get()) }
-    single { SyncRepository(get()) }
+        single {
+            val tokenStorage = get<TokenStorage>()
+            HttpClient {
+                install(ContentNegotiation) {
+                    json(jsonInstance)
+                }
+                defaultRequest {
+                    val token = tokenStorage.getToken() ?: ""
+                    headers.append("Authorization", "Bearer $token")
+                }
+            }
+        }
 
-    single { SyncManager(get(), get(), get(), get(), get()) }
-}
+        single { OuraApiClient(get()) }
 
-val viewModelModule = module {
-    viewModel { OverviewViewModel(get(), get(), get(), get(), get()) }
-    viewModel { SleepViewModel(get()) }
-    viewModel { ReadinessViewModel(get()) }
-    viewModel { ActivityViewModel(get()) }
-    viewModel { BodyViewModel(get()) }
-    viewModel { SettingsViewModel(get(), get()) }
-}
+        single { SleepRepository(get(), get(), get()) }
+        single { ReadinessRepository(get(), get()) }
+        single { ActivityRepository(get(), get()) }
+        single { BodyRepository(get(), get()) }
+        single { SyncRepository(get()) }
+
+        single { SyncManager(get(), get(), get(), get(), get()) }
+    }
+
+val viewModelModule =
+    module {
+        viewModel { OverviewViewModel(get(), get(), get(), get(), get()) }
+        viewModel { SleepViewModel(get()) }
+        viewModel { ReadinessViewModel(get()) }
+        viewModel { ActivityViewModel(get()) }
+        viewModel { BodyViewModel(get()) }
+        viewModel { SettingsViewModel(get(), get()) }
+    }
 
 fun initKoin(appDeclaration: KoinApplication.() -> Unit = {}) {
     startKoin {

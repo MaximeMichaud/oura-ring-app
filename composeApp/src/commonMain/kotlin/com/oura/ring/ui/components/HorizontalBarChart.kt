@@ -21,7 +21,10 @@ import com.oura.ring.ui.theme.OuraColors
 import com.oura.ring.ui.theme.Threshold
 import com.oura.ring.ui.theme.getThresholdColor
 
-data class BarItem(val label: String, val value: Float)
+data class BarItem(
+    val label: String,
+    val value: Float,
+)
 
 @Composable
 fun HorizontalBarChart(

@@ -1,0 +1,65 @@
+# Detekt 2.0 config for Compose Multiplatform
+# buildUponDefaultConfig = true enables all standard rules.
+# This file tunes thresholds and adds Compose-specific exceptions.
+
+config:
+  validation: true
+  warningsAsErrors: true
+
+comments:
+  UndocumentedPublicClass:
+    active: false
+  UndocumentedPublicFunction:
+    active: false
+  UndocumentedPublicProperty:
+    active: false
+
+complexity:
+  active: true
+
+coroutines:
+  active: true
+
+empty-blocks:
+  active: true
+
+exceptions:
+  active: true
+  TooGenericExceptionCaught:
+    allowedExceptionNameRegex: "_|(ignore|expected|e|ex).*"
+
+naming:
+  active: true
+  FunctionNaming:
+    ignoreAnnotated: ["Composable"]
+  FunctionParameterNaming:
+    parameterPattern: "[a-z][_a-zA-Z0-9]*"
+  ConstructorParameterNaming:
+    parameterPattern: "[a-z][_a-zA-Z0-9]*"
+  MatchingDeclarationName:
+    active: false
+
+performance:
+  active: true
+
+potential-bugs:
+  active: true
+
+style:
+  active: true
+  ForbiddenMethodCall:
+    active: true
+    methods:
+      - reason: "Use a logger abstraction"
+        value: "kotlin.io.println"
+      - reason: "Use a logger abstraction"
+        value: "kotlin.io.print"
+  MagicNumber:
+    active: false
+  MaxLineLength:
+    maxLineLength: 120
+    excludeCommentStatements: true
+  RedundantVisibilityModifier:
+    active: false
+  MultilineRawStringIndentation:
+    active: false

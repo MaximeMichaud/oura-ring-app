@@ -14,7 +14,10 @@ class BodyRepository(
 ) {
     // --- Sync ---
 
-    suspend fun syncSpo2(start: String, end: String): Int {
+    suspend fun syncSpo2(
+        start: String,
+        end: String,
+    ): Int {
         val records = api.fetchAll<ApiDailySpo2>("daily_spo2", start, end)
         db.transaction {
             records.forEach { r ->
@@ -28,7 +31,10 @@ class BodyRepository(
         return records.size
     }
 
-    suspend fun syncStress(start: String, end: String): Int {
+    suspend fun syncStress(
+        start: String,
+        end: String,
+    ): Int {
         val records = api.fetchAll<ApiDailyStress>("daily_stress", start, end)
         db.transaction {
             records.forEach { r ->
@@ -43,7 +49,10 @@ class BodyRepository(
         return records.size
     }
 
-    suspend fun syncResilience(start: String, end: String): Int {
+    suspend fun syncResilience(
+        start: String,
+        end: String,
+    ): Int {
         val records = api.fetchAll<ApiDailyResilience>("daily_resilience", start, end)
         db.transaction {
             records.forEach { r ->
@@ -59,7 +68,10 @@ class BodyRepository(
         return records.size
     }
 
-    suspend fun syncCardioAge(start: String, end: String): Int {
+    suspend fun syncCardioAge(
+        start: String,
+        end: String,
+    ): Int {
         val records = api.fetchAll<ApiDailyCardiovascularAge>("daily_cardiovascular_age", start, end)
         db.transaction {
             records.forEach { r ->
@@ -72,7 +84,10 @@ class BodyRepository(
         return records.size
     }
 
-    suspend fun syncVo2Max(start: String, end: String): Int {
+    suspend fun syncVo2Max(
+        start: String,
+        end: String,
+    ): Int {
         val records = api.fetchAll<ApiDailyVo2Max>("vO2_max", start, end)
         db.transaction {
             records.forEach { r ->
@@ -87,47 +102,64 @@ class BodyRepository(
 
     // --- Read: SpO2 ---
 
-    fun latestSpo2(end: String) =
-        db.dailySpo2Queries.selectLatest(end).executeAsOneOrNull()
+    fun latestSpo2(end: String) = db.dailySpo2Queries.selectLatest(end).executeAsOneOrNull()
 
-    fun spo2Trend(start: String, end: String): List<DayValue> =
-        db.dailySpo2Queries.selectInRange(start, end).executeAsList()
+    fun spo2Trend(
+        start: String,
+        end: String,
+    ): List<DayValue> =
+        db.dailySpo2Queries
+            .selectInRange(start, end)
+            .executeAsList()
             .mapNotNull { r -> r.spo2_percentage_average?.let { DayValue(r.day, it) } }
 
     // --- Read: Stress ---
 
-    fun latestStress(end: String) =
-        db.dailyStressQueries.selectLatest(end).executeAsOneOrNull()
+    fun latestStress(end: String) = db.dailyStressQueries.selectLatest(end).executeAsOneOrNull()
 
-    fun stressTrend(start: String, end: String) =
-        db.dailyStressQueries.selectInRange(start, end).executeAsList()
+    fun stressTrend(
+        start: String,
+        end: String,
+    ) = db.dailyStressQueries.selectInRange(start, end).executeAsList()
 
     // --- Read: Resilience ---
 
-    fun latestResilience(end: String) =
-        db.dailyResilienceQueries.selectLatest(end).executeAsOneOrNull()
+    fun latestResilience(end: String) = db.dailyResilienceQueries.selectLatest(end).executeAsOneOrNull()
 
-    fun resilienceTimeline(start: String, end: String) =
-        db.dailyResilienceQueries.selectInRange(start, end).executeAsList()
+    fun resilienceTimeline(
+        start: String,
+        end: String,
+    ) = db.dailyResilienceQueries.selectInRange(start, end).executeAsList()
 
     // --- Read: Cardiovascular Age ---
 
-    fun latestCardioAge(end: String) =
-        db.dailyCardiovascularAgeQueries.selectLatest(end).executeAsOneOrNull()
+    fun latestCardioAge(end: String) = db.dailyCardiovascularAgeQueries.selectLatest(end).executeAsOneOrNull()
 
-    fun cardioAgeTrend(start: String, end: String): List<DayValue> =
-        db.dailyCardiovascularAgeQueries.selectInRange(start, end).executeAsList()
+    fun cardioAgeTrend(
+        start: String,
+        end: String,
+    ): List<DayValue> =
+        db.dailyCardiovascularAgeQueries
+            .selectInRange(start, end)
+            .executeAsList()
             .mapNotNull { r -> r.vascular_age?.let { DayValue(r.day, it.toDouble()) } }
 
     // --- Read: VO2 Max ---
 
-    fun latestVo2Max(end: String) =
-        db.dailyVo2MaxQueries.selectLatest(end).executeAsOneOrNull()
+    fun latestVo2Max(end: String) = db.dailyVo2MaxQueries.selectLatest(end).executeAsOneOrNull()
 
-    fun vo2MaxTrend(start: String, end: String): List<DayValue> =
-        db.dailyVo2MaxQueries.selectInRange(start, end).executeAsList()
+    fun vo2MaxTrend(
+        start: String,
+        end: String,
+    ): List<DayValue> =
+        db.dailyVo2MaxQueries
+            .selectInRange(start, end)
+            .executeAsList()
             .mapNotNull { r -> r.vo2_max?.let { DayValue(r.day, it) } }
 
     fun vo2MaxPersonalBest(): Double? =
-        db.dailyVo2MaxQueries.selectPersonalBest().executeAsOneOrNull()?.personal_best
+        db.dailyVo2MaxQueries
+            .selectPersonalBest()
+            .executeAsOneOrNull()
+            ?.personal_best
 }

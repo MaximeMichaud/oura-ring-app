@@ -5,7 +5,5 @@ import app.cash.sqldelight.driver.native.NativeSqliteDriver
 import com.oura.ring.db.OuraDatabase
 
 actual class DriverFactory {
-    actual fun createDriver(): SqlDriver {
-        return NativeSqliteDriver(OuraDatabase.Schema, "oura.db")
-    }
+    actual fun createDriver(): SqlDriver = NativeSqliteDriver(OuraDatabase.Schema, "oura.db")
 }

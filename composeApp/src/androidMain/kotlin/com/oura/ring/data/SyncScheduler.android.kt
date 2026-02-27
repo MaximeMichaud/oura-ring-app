@@ -8,15 +8,21 @@ import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import java.util.concurrent.TimeUnit
 
-actual class SyncScheduler(private val context: Context) {
+actual class SyncScheduler(
+    private val context: Context,
+) {
     actual fun schedulePeriodicSync(intervalMinutes: Int) {
-        val constraints = Constraints.Builder()
-            .setRequiredNetworkType(NetworkType.CONNECTED)
-            .build()
+        val constraints =
+            Constraints
+                .Builder()
+                .setRequiredNetworkType(NetworkType.CONNECTED)
+                .build()
 
-        val request = PeriodicWorkRequestBuilder<OuraSyncWorker>(
-            intervalMinutes.toLong(), TimeUnit.MINUTES,
-        ).setConstraints(constraints).build()
+        val request =
+            PeriodicWorkRequestBuilder<OuraSyncWorker>(
+                intervalMinutes.toLong(),
+                TimeUnit.MINUTES,
+            ).setConstraints(constraints).build()
 
         WorkManager.getInstance(context).enqueueUniquePeriodicWork(
             "oura_sync",

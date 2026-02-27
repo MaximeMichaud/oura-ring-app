@@ -29,18 +29,22 @@ import com.oura.ring.ui.theme.OuraColors
 import com.oura.ring.ui.theme.ResilienceLevelColors
 import com.oura.ring.ui.theme.StressSummaryColors
 import com.oura.ring.ui.theme.Thresholds
-import kotlin.time.Clock
 import kotlinx.datetime.DateTimeUnit
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.minus
 import kotlinx.datetime.toLocalDateTime
 import org.koin.compose.viewmodel.koinViewModel
+import kotlin.time.Clock
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun BodyScreen(viewModel: BodyViewModel = koinViewModel()) {
     val state by viewModel.uiState.collectAsState()
-    val today = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).date
+    val today =
+        Clock.System
+            .now()
+            .toLocalDateTime(TimeZone.currentSystemDefault())
+            .date
     val start = today.minus(30, DateTimeUnit.DAY).toString()
     val end = today.toString()
 
@@ -67,7 +71,14 @@ fun BodyScreen(viewModel: BodyViewModel = koinViewModel()) {
             Text("SpO2", style = MaterialTheme.typography.titleMedium, color = OuraColors.OnSurface)
             FlowRow(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 StatCardWithThreshold("SpO2", state.spo2?.toFloat(), Thresholds.Spo2, "%.1f", "%", Modifier.weight(1f))
-                StatCardWithThreshold("BDI", state.bdi?.toFloat(), Thresholds.Bdi, "%.1f", " ev/hr", Modifier.weight(1f))
+                StatCardWithThreshold(
+                    "BDI",
+                    state.bdi?.toFloat(),
+                    Thresholds.Bdi,
+                    "%.1f",
+                    " ev/hr",
+                    Modifier.weight(1f),
+                )
             }
         }
 
@@ -78,8 +89,24 @@ fun BodyScreen(viewModel: BodyViewModel = koinViewModel()) {
             Text("Stress", style = MaterialTheme.typography.titleMedium, color = OuraColors.OnSurface)
             FlowRow(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 StatCardMapped("Summary", state.stressSummary, StressSummaryColors, Modifier.weight(1f))
-                StatCard("Stress", state.stressMinutes?.let { String.format("%.0f", it) } ?: "-", OuraColors.Red, " min", Modifier.weight(1f))
-                StatCard("Recovery", state.recoveryMinutes?.let { String.format("%.0f", it) } ?: "-", OuraColors.Green, " min", Modifier.weight(1f))
+                StatCard(
+                    "Stress",
+                    state.stressMinutes?.let {
+                        String.format("%.0f", it)
+                    } ?: "-",
+                    OuraColors.Red,
+                    " min",
+                    Modifier.weight(1f),
+                )
+                StatCard(
+                    "Recovery",
+                    state.recoveryMinutes?.let {
+                        String.format("%.0f", it)
+                    } ?: "-",
+                    OuraColors.Green,
+                    " min",
+                    Modifier.weight(1f),
+                )
             }
         }
 
@@ -90,8 +117,22 @@ fun BodyScreen(viewModel: BodyViewModel = koinViewModel()) {
             Text("Resilience", style = MaterialTheme.typography.titleMedium, color = OuraColors.OnSurface)
             FlowRow(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 StatCardMapped("Level", state.resilienceLevel, ResilienceLevelColors, Modifier.weight(1f))
-                StatCard("Sleep Recovery", state.resilienceSleepRecovery?.let { String.format("%.0f", it) } ?: "-", OuraColors.Purple, modifier = Modifier.weight(1f))
-                StatCard("Daytime Recovery", state.resilienceDaytimeRecovery?.let { String.format("%.0f", it) } ?: "-", OuraColors.Purple, modifier = Modifier.weight(1f))
+                StatCard(
+                    "Sleep Recovery",
+                    state.resilienceSleepRecovery?.let {
+                        String.format("%.0f", it)
+                    } ?: "-",
+                    OuraColors.Purple,
+                    modifier = Modifier.weight(1f),
+                )
+                StatCard(
+                    "Daytime Recovery",
+                    state.resilienceDaytimeRecovery?.let {
+                        String.format("%.0f", it)
+                    } ?: "-",
+                    OuraColors.Purple,
+                    modifier = Modifier.weight(1f),
+                )
             }
         }
 
@@ -117,8 +158,21 @@ fun BodyScreen(viewModel: BodyViewModel = koinViewModel()) {
         item {
             Text("VO2 Max", style = MaterialTheme.typography.titleMedium, color = OuraColors.OnSurface)
             FlowRow(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                StatCardWithThreshold("VO2 Max", state.vo2Max?.toFloat(), Thresholds.Vo2Max, "%.1f", modifier = Modifier.weight(1f))
-                StatCard("Personal Best", state.vo2MaxPb?.let { String.format("%.1f", it) } ?: "-", OuraColors.Orange, modifier = Modifier.weight(1f))
+                StatCardWithThreshold(
+                    "VO2 Max",
+                    state.vo2Max?.toFloat(),
+                    Thresholds.Vo2Max,
+                    "%.1f",
+                    modifier = Modifier.weight(1f),
+                )
+                StatCard(
+                    "Personal Best",
+                    state.vo2MaxPb?.let {
+                        String.format("%.1f", it)
+                    } ?: "-",
+                    OuraColors.Orange,
+                    modifier = Modifier.weight(1f),
+                )
             }
         }
 
